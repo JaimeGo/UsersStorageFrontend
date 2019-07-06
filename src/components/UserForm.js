@@ -1,57 +1,77 @@
 import React from 'react';
-import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input, FormText, Col } from 'reactstrap';
 import './UserForm'
+import UserNavbar from "./UserNavbar";
+import './UserForm.scss'
 
 class UserForm extends React.Component{
     constructor(props){
         super(props);
-        this.state={}
+        this.state={
+          name:'John',
+          lastName:'Doe',
+          rut:'12.345.678-9'
+        };
     }
 
     handleSubmit = (event) => {
         event.preventDefault();
-        if (true){
-            console.log("HOLAAA")
+        if (this.props.formType==='edit'){
+            console.log("Edit");
+        } else {
+            console.log("New");
         }
 
     };
 
     render() {
 
-        if (this.props.formType==="edit") {
-            return (
-                <Form onSubmit={this.handleSubmit}>
+        return (
+            <div>
+                <UserNavbar/>
+                <br/>
+                <Form onSubmit={this.handleSubmit} id="userForm">
                     <FormGroup>
-                        <Label for="userName">Name</Label>
-                        <Input type="text" name="userName" id="userName" placeholder="John" />
+                        <Label for="userName" sm={2}>Name</Label>
+                        <Col sm={5}>
+                            <Input type="text" name="userName" id="userName" value={this.state.name}/>
+                        </Col>
                     </FormGroup>
                     <FormGroup>
-                        <Label for="userLastName">Last name</Label>
-                        <Input type="text" name="userLastName" id="userLastName" placeholder="Doe" />
+                        <Label for="userLastName" sm={2}>Last name</Label>
+                        <Col sm={5}>
+                            <Input type="text" name="userLastName" id="userLastName" value={this.state.lastName} />
+                        </Col>
                     </FormGroup>
                     <FormGroup>
-                        <Label for="rut">Rut</Label>
-                        <Input type="text" name="rut" id="rut" placeholder="12.345.678-9" />
+                        <Label for="rut" sm={2}>Rut</Label>
+                        <Col sm={5}>
+                            <Input type="text" name="rut" id="rut" value={this.state.rut}/>
+                        </Col>
                     </FormGroup>
 
                     <FormGroup>
-                        <Label for="picture">Picture</Label>
-                        <Input type="file" name="picture" id="picture" />
-                        <FormText color="muted">
-                            Select an image that represents you.
-                        </FormText>
+                        <Label for="picture" sm={2}>Picture</Label>
+                        <Col sm={5}>
+                            <Input type="file" name="picture" id="picture" />
+                            <FormText color="muted">
+                                Select an image that represents you.
+                            </FormText>
+                        </Col>
+
                     </FormGroup>
 
                     <FormGroup>
-                        <Input type="submit" name="submit" id="submit" value="Send"/>
+                        <Col sm={2}>
+                            <Input type="submit" name="submit" id="submit_button" value="Send"/>
+                        </Col>
 
                     </FormGroup>
 
                 </Form>
-            );
-        } else {
-            return <h1>New</h1>
-        }
+            </div>
+        );
+
     }
 }
 

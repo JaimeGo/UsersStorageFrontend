@@ -1,5 +1,18 @@
-#save_button{
+
+$baseColor: lightcoral;
+
+
+#submit_button{
   width: 70px;
   background-color: darken($baseColor, 5%);
   border: 1px solid white;
+}
+
+
+
+
+#userForm{
+  color: darken(grey, 15%);
+  margin-left: 35vw;
+
 }

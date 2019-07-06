@@ -2,8 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './components/App';
-import NewUser from './components/NewUser';
-import EditUser from './components/EditUser';
+import UserForm from './components/UserForm'
 import ShowUser from './components/ShowUser';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter as Router, Route, Redirect, Switch } from "react-router-dom";
@@ -15,8 +14,8 @@ const routing = (
 
                 <Route exact path="/" render={()=>(<Redirect to="/users"/>)} />
                 <Route exact path="/users" component={App} />
-                <Route path="/users/new" component={NewUser} />
-                <Route path="/users/:id/edit" component={EditUser} />
+                <Route path="/users/new" render={(props) => <UserForm {...props} formType="new"/>} />
+                <Route path="/users/:id/edit" render={(props) => <UserForm{...props} formType="edit"/>} />
                 <Route path="/users/:id" component={ShowUser} />
 
             </Switch>
