@@ -2,7 +2,6 @@
 import React from 'react';
 import UserItem from './UserItem'
 import './UserTable.scss'
-import { Button } from 'reactstrap';
 
 class UserTable extends React.Component{
     constructor(props){

@@ -5,9 +5,7 @@ import './UserItem.scss'
 
 
 class UserItem extends React.Component{
-    constructor(props){
-        super(props)
-    }
+
 
     handleClick = () => {
         if (this.props.isClickable===true){

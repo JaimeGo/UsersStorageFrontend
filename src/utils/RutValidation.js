@@ -3,7 +3,6 @@
 
 
 const rutValidator = (rut)=>{
-    console.log(rut);
 
     let value = rut.replace('.','');
 

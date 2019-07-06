@@ -90,7 +90,6 @@ class UserForm extends React.Component{
 
     handleNameChange=(event)=>{
         this.setState({name:event.target.value})
-        console.log(this.state.name)
     };
 
     handleLastNameChange=(event)=>{
@@ -137,7 +136,6 @@ class UserForm extends React.Component{
                         <Col sm={5}>
                             <ImageUploader
                                 withIcon={true}
-                                buttonText='Choose images'
                                 onChange={this.handleImageChange}
                                 imgExtension={['.jpg', '.jpeg', '.png']}
                                 maxFileSize={5242880}
