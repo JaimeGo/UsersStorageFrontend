@@ -25,7 +25,7 @@ class UserItem extends React.Component{
         }
     };
 
-    render(props){
+    render(){
 
         return (
             <tr onClick={this.handleClick} className={this.clickableClassName()}>

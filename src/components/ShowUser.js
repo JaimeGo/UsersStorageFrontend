@@ -11,8 +11,28 @@ class ShowUser extends React.Component{
     constructor(props){
         super(props);
         this.params=props.match.params;
+        this.state={
+            user:{
+                avatar_location:null,
+                name:null,
+                last_name:null,
+                rut:null
+            }
+        }
     }
 
+    async componentDidMount() {
+        await API.get(`/users/${this.params.id}`)
+            .then(res => {
+                console.log(res);
+                this.setState({user:res.data});
+            })
+            .catch((err)=>{
+                console.error(err);
+            })
+
+
+    }
 
 
     handleEdit = () => {
@@ -25,6 +45,7 @@ class ShowUser extends React.Component{
                 console.log(res);
                 this.props.history.push(`/`);
             })
+
     };
 
     render() {
@@ -32,7 +53,7 @@ class ShowUser extends React.Component{
         return (
             <div>
                 <UserNavbar/>
-                <UserTable tableType="show" userId={this.params.id}/>
+                <UserTable tableType="show" user={this.state.user}/>
                 <Button onClick={this.handleEdit} className="table_button" id="edit_button"> Edit </Button>
                 <Button onClick={this.handleDelete} className="table_button" id="delete_button"> Delete </Button>
             </div>
