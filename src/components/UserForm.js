@@ -4,6 +4,7 @@ import './UserForm'
 import UserNavbar from "./UserNavbar";
 import './UserForm.scss'
 import API from "../api";
+import ImageUploader from 'react-images-upload';
 
 class UserForm extends React.Component{
     constructor(props){
@@ -23,16 +24,24 @@ class UserForm extends React.Component{
         console.log("Starting submission of form");
         event.preventDefault();
 
-        let user={
+        /*let user={
             name:this.state.name,
             last_name:this.state.lastName,
             rut:this.state.rut,
             avatar:this.state.avatar
-        };
+        };*/
+
+        let bodyFormData = new FormData();
+        bodyFormData.set('name', this.state.name);
+        bodyFormData.set('last_name', this.state.lastName);
+        bodyFormData.set('rut', this.state.rut);
+        bodyFormData.append('avatar', this.state.avatar);
+
+
 
         if (this.props.formType==='edit'){
 
-            await API.put(`/users/${this.params.id}`, user)
+            await API.put(`/users/${this.params.id}`, bodyFormData)
                 .then(res => {
                     console.log(res);
                     this.props.history.push(`/`);
@@ -43,7 +52,7 @@ class UserForm extends React.Component{
 
         } else {
 
-            API.post(`/users`, user)
+            API.post(`/users`, bodyFormData)
                 .then(res => {
                     console.log(res);
                     this.props.history.push(`/`);
@@ -68,8 +77,9 @@ class UserForm extends React.Component{
         this.setState({rut:event.target.value})
     };
 
-    handleImageChange=(event)=>{
-        this.setState({avatar:event.target.files[0]})
+    handleImageChange=(images)=>{
+        console.log("IMAGESSS",images)
+        this.setState({avatar:images[0]})
     };
 
 
@@ -102,7 +112,13 @@ class UserForm extends React.Component{
                     <FormGroup>
                         <Label for="picture" sm={2}>Picture</Label>
                         <Col sm={5}>
-                            <Input onChange={this.handleImageChange} type="file" name="picture" id="picture" accept="image/jpeg, image/jpg, image/png"/>
+                            <ImageUploader
+                                withIcon={true}
+                                buttonText='Choose images'
+                                onChange={this.handleImageChange}
+                                imgExtension={['.jpg', '.jpeg', '.png']}
+                                maxFileSize={5242880}
+                            />
                             <FormText color="muted">
                                 Select an image that represents you.
                             </FormText>
