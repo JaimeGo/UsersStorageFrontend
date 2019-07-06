@@ -1,0 +1,20 @@
+$baseColor: lightcoral;
+$borderRadius: 10px;
+$imageBig: 100px;
+$imageSmall: 60px;
+$padding: 10px;
+
+#brandIcon {
+  margin-right: 10px;
+  color: $baseColor;
+}
+
+#addUserLink{
+  display: inline-block;
+}
+
+#addUserIcon{
+  color: $baseColor;
+}
+
+

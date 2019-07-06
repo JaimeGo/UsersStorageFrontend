@@ -1,0 +1,21 @@
+$baseColor: lightcoral;
+$borderRadius: 10px;
+$imageBig: 100px;
+$imageSmall: 60px;
+$padding: 10px;
+
+#edit_button{
+  margin-left: 67vw;
+}
+
+#delete_button{
+  margin-left: 2vw;
+
+
+}
+
+.table_button{
+  width: 70px;
+  background-color: darken($baseColor, 5%);
+  border: 1px solid white;
+}
