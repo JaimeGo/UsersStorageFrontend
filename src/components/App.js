@@ -15,7 +15,11 @@ class App extends React.Component{
     componentDidMount() {
         const users = API.get('/users')
             .then((res)=>{
-                this.setState({users})
+                console.log(res);
+                this.setState({users:res.data})
+            })
+            .catch((err)=>{
+                console.error(err);
             })
     }
 

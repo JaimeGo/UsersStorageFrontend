@@ -13,19 +13,21 @@ class UserForm extends React.Component{
 
             name:'John',
             lastName:'Doe',
-            rut:'12.345.678-9'
+            rut:'12.345.678-9',
+            avatar:null
 
         };
     }
 
     handleSubmit = async (event) => {
+        console.log("Starting submission of form");
         event.preventDefault();
 
         let user={
             name:this.state.name,
             last_name:this.state.lastName,
             rut:this.state.rut,
-            avatar:event.target.files[0]
+            avatar:this.state.avatar
         };
 
         if (this.props.formType==='edit'){
@@ -35,6 +37,9 @@ class UserForm extends React.Component{
                     console.log(res);
                     this.props.history.push(`/`);
                 })
+                .catch((err)=>{
+                    console.error(err);
+                })
 
         } else {
 
@@ -43,9 +48,30 @@ class UserForm extends React.Component{
                     console.log(res);
                     this.props.history.push(`/`);
                 })
+                .catch((err)=>{
+                    console.error(err);
+                })
         }
 
+        console.log("Submission of form finished");
     };
+
+    handleNameChange=(event)=>{
+        this.setState({name:event.target.value})
+    };
+
+    handleLastNameChange=(event)=>{
+        this.setState({lastName:event.target.value})
+    };
+
+    handleRutChange=(event)=>{
+        this.setState({rut:event.target.value})
+    };
+
+    handleImageChange=(event)=>{
+        this.setState({avatar:event.target.files[0]})
+    };
+
 
     render() {
 
@@ -57,26 +83,26 @@ class UserForm extends React.Component{
                     <FormGroup>
                         <Label for="userName" sm={2}>Name</Label>
                         <Col sm={5}>
-                            <Input type="text" name="userName" id="userName" value={this.state.name}/>
+                            <Input onChange={this.handleNameChange} type="text" name="userName" id="userName" value={this.state.name}/>
                         </Col>
                     </FormGroup>
                     <FormGroup>
                         <Label for="userLastName" sm={2}>Last name</Label>
                         <Col sm={5}>
-                            <Input type="text" name="userLastName" id="userLastName" value={this.state.lastName} />
+                            <Input onChange={this.handleLastNameChange} type="text" name="userLastName" id="userLastName" value={this.state.lastName} />
                         </Col>
                     </FormGroup>
                     <FormGroup>
                         <Label for="rut" sm={2}>Rut</Label>
                         <Col sm={5}>
-                            <Input type="text" name="rut" id="rut" value={this.state.rut}/>
+                            <Input onChange={this.handleRutChange} type="text" name="rut" id="rut" value={this.state.rut}/>
                         </Col>
                     </FormGroup>
 
                     <FormGroup>
                         <Label for="picture" sm={2}>Picture</Label>
                         <Col sm={5}>
-                            <Input type="file" name="picture" id="picture" />
+                            <Input onChange={this.handleImageChange} type="file" name="picture" id="picture" accept="image/jpeg, image/jpg, image/png"/>
                             <FormText color="muted">
                                 Select an image that represents you.
                             </FormText>
@@ -86,7 +112,7 @@ class UserForm extends React.Component{
 
                     <FormGroup>
                         <Col sm={2}>
-                            <Input type="submit" name="submit" id="submit_button" value="Send"/>
+                            <Input type="submit" name="submit" id="submit_button" value="Send" />
                         </Col>
 
                     </FormGroup>
