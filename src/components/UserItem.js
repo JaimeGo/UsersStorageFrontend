@@ -7,6 +7,7 @@ import './UserItem.scss'
 class UserItem extends React.Component{
 
 
+
     handleClick = () => {
         if (this.props.isClickable===true){
             this.props.history.push(`/users/${this.props.user.id}`);
@@ -24,6 +25,8 @@ class UserItem extends React.Component{
     };
 
     render(){
+
+
 
         return (
             <tr onClick={this.handleClick} className={this.clickableClassName()}>

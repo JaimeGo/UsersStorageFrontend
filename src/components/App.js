@@ -17,6 +17,7 @@ class App extends React.Component{
             .then((res)=>{
                 console.log(res);
                 this.setState({users:res.data})
+
             })
             .catch((err)=>{
                 console.error(err);

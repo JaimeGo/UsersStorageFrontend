@@ -53,9 +53,9 @@ class UserForm extends React.Component{
             let bodyFormData = new FormData();
             bodyFormData.set('name', this.state.name);
             bodyFormData.set('last_name', this.state.lastName);
-            this.state.rut.replace('-','');
-            let pos=this.state.rut.length-1;
-            bodyFormData.set('rut', this.state.rut.slice(0, pos) + '-' + this.state.rut.slice(pos));
+            let rutWithNoDash=this.state.rut.replace('-','');
+            let pos=rutWithNoDash.length-1;
+            bodyFormData.set('rut', rutWithNoDash.slice(0, pos) + '-' + rutWithNoDash.slice(pos));
             bodyFormData.append('avatar', this.state.avatar);
 
 
