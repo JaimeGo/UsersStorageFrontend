@@ -1,10 +1,11 @@
 import React from 'react';
-import { Button, Form, FormGroup, Label, Input, FormText, Col } from 'reactstrap';
+import { Form, FormGroup, Label, Input, FormText, Col } from 'reactstrap';
 import './UserForm'
 import UserNavbar from "./UserNavbar";
 import './UserForm.scss'
 import API from "../apis/UserAPI";
 import ImageUploader from 'react-images-upload';
+import rutValidator from '../utils/RutValidation'
 
 class UserForm extends React.Component{
     constructor(props){
@@ -13,60 +14,83 @@ class UserForm extends React.Component{
         this.state={
 
             name:'John',
-            lastName:'Doe',
-            rut:'12.345.678-9',
+            lastName:'Smith',
+            rut:'12.312.312-3',
             avatar:null
 
         };
     }
 
+    componentDidMount = () => {
+        if (this.props.formType==='edit'){
+            API.get(`/users/${this.params.id}`)
+                .then(res => {
+                    console.log(res);
+                    this.setState({name:res.data.name});
+                    this.setState({lastName:res.data.last_name});
+                    this.setState({rut:res.data.rut});
+                })
+                .catch((err)=>{
+                    console.error(err);
+                })
+
+
+
+        }
+    };
+
+
+
     handleSubmit = async (event) => {
-        console.log("Starting submission of form");
+
         event.preventDefault();
 
-        /*let user={
-            name:this.state.name,
-            last_name:this.state.lastName,
-            rut:this.state.rut,
-            avatar:this.state.avatar
-        };*/
-
-        let bodyFormData = new FormData();
-        bodyFormData.set('name', this.state.name);
-        bodyFormData.set('last_name', this.state.lastName);
-        bodyFormData.set('rut', this.state.rut);
-        bodyFormData.append('avatar', this.state.avatar);
-
-
-
-        if (this.props.formType==='edit'){
-
-            await API.put(`/users/${this.params.id}`, bodyFormData)
-                .then(res => {
-                    console.log(res);
-                    this.props.history.push(`/`);
-                })
-                .catch((err)=>{
-                    console.error(err);
-                })
-
+        if (!rutValidator(this.state.rut)){
+            alert('Rut is invalid')
         } else {
 
-            API.post(`/users`, bodyFormData)
-                .then(res => {
-                    console.log(res);
-                    this.props.history.push(`/`);
-                })
-                .catch((err)=>{
-                    console.error(err);
-                })
+
+            let bodyFormData = new FormData();
+            bodyFormData.set('name', this.state.name);
+            bodyFormData.set('last_name', this.state.lastName);
+            this.state.rut.replace('-','');
+            let pos=this.state.rut.length-1;
+            bodyFormData.set('rut', this.state.rut.slice(0, pos) + '-' + this.state.rut.slice(pos));
+            bodyFormData.append('avatar', this.state.avatar);
+
+
+
+            if (this.props.formType==='edit'){
+
+                await API.put(`/users/${this.params.id}`, bodyFormData)
+                    .then(res => {
+                        console.log(res);
+                        this.props.history.push(`/`);
+                    })
+                    .catch((err)=>{
+                        console.error(err);
+                    })
+
+            } else {
+
+                await API.post(`/users`, bodyFormData)
+                    .then(res => {
+                        console.log(res);
+                        this.props.history.push(`/`);
+                    })
+                    .catch((err)=>{
+                        console.error(err);
+                    })
+            }
+
         }
 
-        console.log("Submission of form finished");
+
     };
 
     handleNameChange=(event)=>{
         this.setState({name:event.target.value})
+        console.log(this.state.name)
     };
 
     handleLastNameChange=(event)=>{
@@ -92,19 +116,19 @@ class UserForm extends React.Component{
                     <FormGroup>
                         <Label for="userName" sm={2}>Name</Label>
                         <Col sm={5}>
-                            <Input onChange={this.handleNameChange} type="text" name="userName" id="userName" value={this.state.name}/>
+                            <Input onChange={this.handleNameChange} type="text" name="userName" id="userName" placeholder={this.state.name} />
                         </Col>
                     </FormGroup>
                     <FormGroup>
                         <Label for="userLastName" sm={2}>Last name</Label>
                         <Col sm={5}>
-                            <Input onChange={this.handleLastNameChange} type="text" name="userLastName" id="userLastName" value={this.state.lastName} />
+                            <Input onChange={this.handleLastNameChange} type="text" name="userLastName" id="userLastName" placeholder={this.state.lastName} />
                         </Col>
                     </FormGroup>
                     <FormGroup>
                         <Label for="rut" sm={2}>Rut</Label>
                         <Col sm={5}>
-                            <Input onChange={this.handleRutChange} type="text" name="rut" id="rut" value={this.state.rut}/>
+                            <Input onChange={this.handleRutChange} type="text" name="rut" id="rut" placeholder={this.state.rut}/>
                         </Col>
                     </FormGroup>
 

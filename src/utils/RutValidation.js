@@ -1,20 +1,41 @@
 
 
-const dv = (T) => {
-    let M=0,S=1;
-    for(;T;T=Math.floor(T/10))
-        S=(S+T%10*(9-M++%6))%11;
-    return S?S-1:'k';
-};
 
-const rutValidator = (completeRut)=>{
-    if (!/^[0-9]+[-|‐]{1}[0-9kK]{1}$/.test(completeRut))
-        return false;
-    let tmp 	= completeRut.split('-');
-    let digv	= tmp[1];
-    let rut 	= tmp[0];
-    if ( digv === 'K' ) digv = 'k' ;
-    return (dv(rut) === digv );
+
+const rutValidator = (rut)=>{
+    console.log(rut);
+
+    let value = rut.replace('.','');
+
+    value = value.replace('-','');
+
+    let body = value.slice(0,-1);
+    let dv = value.slice(-1).toUpperCase();
+
+    if(body.length < 7) {return false;}
+
+    let sum = 0;
+    let multiple = 2;
+
+    for(let i=1;i<=body.length;i++) {
+
+        let index = multiple * value.charAt(body.length - i);
+
+        sum = sum + index;
+
+        if(multiple < 7) { multiple = multiple + 1; } else { multiple = 2; }
+
+    }
+
+    let dvExpected = 11 - (sum % 11);
+
+    dv = (dv === 'K')?10:dv;
+    dv = (dv === 0)?11:dv;
+
+    return dvExpected.toString(10) === dv;
+    
+    
+    
 };
 
 export default rutValidator;
