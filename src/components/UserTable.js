@@ -48,7 +48,7 @@ class UserTable extends React.Component{
                 <div>
                     <div className="table-users">
                         <div className="header">
-                            User
+                            User Detail
                         </div>
 
                         <table cellSpacing="0">

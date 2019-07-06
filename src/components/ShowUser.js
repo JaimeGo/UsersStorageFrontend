@@ -4,7 +4,7 @@ import UserTable from "./UserTable";
 import {Button} from "reactstrap";
 import {withRouter} from 'react-router-dom'
 import './ShowUser.scss'
-import API from '../api'
+import API from '../apis/UserAPI'
 
 
 class ShowUser extends React.Component{

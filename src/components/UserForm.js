@@ -3,7 +3,7 @@ import { Button, Form, FormGroup, Label, Input, FormText, Col } from 'reactstrap
 import './UserForm'
 import UserNavbar from "./UserNavbar";
 import './UserForm.scss'
-import API from "../api";
+import API from "../apis/UserAPI";
 import ImageUploader from 'react-images-upload';
 
 class UserForm extends React.Component{
@@ -78,7 +78,6 @@ class UserForm extends React.Component{
     };
 
     handleImageChange=(images)=>{
-        console.log("IMAGESSS",images)
         this.setState({avatar:images[0]})
     };
 
@@ -118,6 +117,8 @@ class UserForm extends React.Component{
                                 onChange={this.handleImageChange}
                                 imgExtension={['.jpg', '.jpeg', '.png']}
                                 maxFileSize={5242880}
+                                buttonText='Choose an Image'
+                                label='Max size accepted: 5mb, formats: jpg|jpeg|png'
                             />
                             <FormText color="muted">
                                 Select an image that represents you.
