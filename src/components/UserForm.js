@@ -3,24 +3,46 @@ import { Button, Form, FormGroup, Label, Input, FormText, Col } from 'reactstrap
 import './UserForm'
 import UserNavbar from "./UserNavbar";
 import './UserForm.scss'
+import API from "../api";
 
 class UserForm extends React.Component{
     constructor(props){
         super(props);
         this.params=props.match.params;
         this.state={
-          name:'John',
-          lastName:'Doe',
-          rut:'12.345.678-9'
+
+            name:'John',
+            lastName:'Doe',
+            rut:'12.345.678-9'
+
         };
     }
 
-    handleSubmit = (event) => {
+    handleSubmit = async (event) => {
         event.preventDefault();
+
+        let user={
+            name:this.state.name,
+            last_name:this.state.lastName,
+            rut:this.state.rut,
+            avatar:event.target.files[0]
+        };
+
         if (this.props.formType==='edit'){
-            console.log("Edit");
+
+            await API.put(`/users/${this.params.id}`, user)
+                .then(res => {
+                    console.log(res);
+                    this.props.history.push(`/`);
+                })
+
         } else {
-            console.log("New");
+
+            API.post(`/users`, user)
+                .then(res => {
+                    console.log(res);
+                    this.props.history.push(`/`);
+                })
         }
 
     };

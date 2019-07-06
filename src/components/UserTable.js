@@ -28,7 +28,7 @@ const UserTable = (props)=>{
                     </thead>
 
                     <tbody>
-                        {this.props.users.map((user)=>{return <UserItem user={user} isClickable={true}/>})}
+                        {props.users.map((user)=>{return <UserItem user={user} isClickable={true}/>})}
                     </tbody>
 
                 </table>
