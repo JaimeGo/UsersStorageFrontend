@@ -28,10 +28,7 @@ const UserTable = (props)=>{
                     </thead>
 
                     <tbody>
-                        <UserItem userId={state.userIds[0]} isClickable={true}/>
-                        <UserItem userId={state.userIds[1]} isClickable={true}/>
-                        <UserItem userId={state.userIds[2]} isClickable={true}/>
-                        <UserItem userId={state.userIds[3]} isClickable={true}/>
+                        {this.props.users.map((user)=>{return <UserItem user={user} isClickable={true}/>})}
                     </tbody>
 
                 </table>

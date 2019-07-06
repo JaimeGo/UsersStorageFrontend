@@ -11,7 +11,7 @@ class UserItem extends React.Component{
 
     handleClick = () => {
         if (this.props.isClickable===true){
-            this.props.history.push(`/users/${this.props.userId}`);
+            this.props.history.push(`/users/${this.props.user.id}`);
         }
 
     };
@@ -25,14 +25,14 @@ class UserItem extends React.Component{
         }
     };
 
-    render(){
+    render(props){
 
         return (
             <tr onClick={this.handleClick} className={this.clickableClassName()}>
-                <td><img src="http://lorempixel.com/100/100/people/1" alt=""/></td>
-                <td>Jane</td>
-                <td>Doe</td>
-                <td>12.123.123-1</td>
+                <td><img src={this.props.user.avatar_location} alt="avatar"/></td>
+                <td>{this.props.user.name}</td>
+                <td>{this.props.user.last_name}</td>
+                <td>{this.props.user.rut}</td>
             </tr>
 
 

@@ -4,6 +4,7 @@ import UserTable from "./UserTable";
 import {Button} from "reactstrap";
 import {withRouter} from 'react-router-dom'
 import './ShowUser.scss'
+import API from '../api'
 
 
 class ShowUser extends React.Component{
@@ -18,8 +19,12 @@ class ShowUser extends React.Component{
         this.props.history.push(`/users/${this.params.id}/edit`);
     };
 
-    handleNew = () => {
-        this.props.history.push(`/`);
+    handleDelete = () => {
+        API.delete(`/users/${this.params.id}`)
+            .then(res => {
+                console.log(res);
+                this.props.history.push(`/`);
+            })
     };
 
     render() {
@@ -29,7 +34,7 @@ class ShowUser extends React.Component{
                 <UserNavbar/>
                 <UserTable tableType="show" userId={this.params.id}/>
                 <Button onClick={this.handleEdit} className="table_button" id="edit_button"> Edit </Button>
-                <Button onClick={this.handleNew} className="table_button" id="delete_button"> Delete </Button>
+                <Button onClick={this.handleDelete} className="table_button" id="delete_button"> Delete </Button>
             </div>
 
 

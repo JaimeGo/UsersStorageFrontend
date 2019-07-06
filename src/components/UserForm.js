@@ -7,6 +7,7 @@ import './UserForm.scss'
 class UserForm extends React.Component{
     constructor(props){
         super(props);
+        this.params=props.match.params;
         this.state={
           name:'John',
           lastName:'Doe',
